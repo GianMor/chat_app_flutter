@@ -16,7 +16,11 @@ class MyApp extends StatelessWidget {
         builder: (context, appSnapshot) {
           return MaterialApp(
             title: 'Flutter Chat',
-            theme: ThemeData(),
+            theme: ThemeData(
+                buttonTheme: ButtonTheme.of(context).copyWith(
+                    buttonColor: Colors.cyan[50],
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20)))),
             home: AuthScreen(),
           );
         });
