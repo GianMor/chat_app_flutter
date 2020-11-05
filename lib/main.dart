@@ -1,3 +1,4 @@
+import 'package:chat_app_flutter/screens/auth_screen.dart';
 import 'package:chat_app_flutter/screens/chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             title: 'Flutter Chat',
             theme: ThemeData(),
-            home: ChatScreen(),
+            home: AuthScreen(),
           );
         });
   }
