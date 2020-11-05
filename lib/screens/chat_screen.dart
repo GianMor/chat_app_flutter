@@ -1,16 +1,39 @@
 import 'package:chat_app_flutter/widgets/chat/messages.dart';
 import 'package:chat_app_flutter/widgets/chat/new_messages.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class ChatScreen extends StatelessWidget {
+class ChatScreen extends StatefulWidget {
+  @override
+  _ChatScreenState createState() => _ChatScreenState();
+}
+
+class _ChatScreenState extends State<ChatScreen> {
   final FirebaseFirestore _firebase = FirebaseFirestore.instance;
+
+    @override
+  void initState() {
+    super.initState();
+    final fbm = FirebaseMessaging();
+    fbm.requestNotificationPermissions();
+    fbm.configure(onMessage: (msg) {
+      print(msg);
+      return;
+    }, onLaunch: (msg) {
+      print(msg);
+      return;
+    }, onResume: (msg) {
+      print(msg);
+      return;
+    });
+    fbm.subscribeToTopic('chat');
+  }
+
 
   @override
   Widget build(BuildContext context) {
-    final chats =
-        _firebase.collection('chats/Xn7VXTNGQlWWtQRLFEBU/messages').snapshots();
     return Scaffold(
       appBar: AppBar(title: Text('FlutterChat'), actions: [
         DropdownButton(
@@ -40,12 +63,15 @@ class ChatScreen extends StatelessWidget {
         ),
       ]),
       body: Container(
-          child: Column(children: [
-        Expanded(
-          child: Messages(),
+        child: Column(
+          children: <Widget>[
+            Expanded(
+              child: Messages(),
+            ),
+            NewMessages(),
+          ],
         ),
-        NewMessages()
-      ])),
+      ),
     );
   }
 }
