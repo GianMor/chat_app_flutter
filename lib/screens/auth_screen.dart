@@ -23,6 +23,10 @@ class _AuthScreenState extends State<AuthScreen> {
     UserCredential authResult;
 
     try {
+      setState(() {
+        _isLoading = true;
+      });
+
       if (isLogin) {
         authResult = await _auth.signInWithEmailAndPassword(
           email: email,
@@ -63,12 +67,13 @@ class _AuthScreenState extends State<AuthScreen> {
         _isLoading = false;
       });
     }
+  }
 
-    @override
-    Widget build(BuildContext context) {
-      return Scaffold(
-        body: AuthForm(_submitAuthForm, _isLoading),
-      );
-    }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Theme.of(context).primaryColor,
+      body: AuthForm(_submitAuthForm, _isLoading),
+    );
   }
 }
